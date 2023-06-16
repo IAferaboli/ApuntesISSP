@@ -3,13 +3,13 @@
 require_once "conexion.php";
 
 class Cliente extends Conexion {
-    public $nombre, $apellido, $fecnac, $email,$id_cliente;
+    public $nombre, $apellido, $fecnac, $email,$id_cliente, $contraseña;
 
     //Create-Cargar
     public function create() {
         $this->conectar();
-        $prepare = mysqli_prepare($this->conect, "INSERT INTO clientes (nombre, apellido, fecnac, email) VALUES (?, ?, ?, ?)");
-        $prepare->bind_param("ssss", $this->nombre, $this->apellido, $this->fecnac, $this->email);
+        $prepare = mysqli_prepare($this->conect, "INSERT INTO clientes (nombre, apellido, fecnac, email, contraseña) VALUES (?, ?, ?, ?, ?)");
+        $prepare->bind_param("sssss", $this->nombre, $this->apellido, $this->fecnac, $this->email, $this->contraseña);
         $prepare->execute();
     }
 
@@ -17,7 +17,7 @@ class Cliente extends Conexion {
     //Create-Cargar
     public function update() {
         $this->conectar();
-        $prepare = mysqli_prepare($this->conect, "UPDATE clientes SET nombre = ?, apellido = ?, fecnac = ?, email = ? WHERE id_cliente = ?");
+        $prepare = mysqli_prepare($this->conect, "UPDATE clientes SET nombre = ?, apellido = ?, fecnac = ?, email = ?, contraseña = ? WHERE id_cliente = ?");
         $prepare->bind_param("ssssi", $this->nombre, $this->apellido, $this->fecnac, $this->email, $this->id_cliente);
         $prepare->execute();
     }
