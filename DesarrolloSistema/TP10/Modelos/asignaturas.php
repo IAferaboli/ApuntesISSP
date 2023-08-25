@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexion.php";
+require_once "../Modelos/asignaturas.php";
 
 
 class Asignatura extends Conexion {

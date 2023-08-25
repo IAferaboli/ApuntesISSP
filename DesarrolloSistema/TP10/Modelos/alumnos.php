@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexion.php";
+require_once "asignaturas.php";
 
 
 class Alumno extends Conexion {
@@ -56,5 +57,22 @@ class Alumno extends Conexion {
         $prepare->execute();
         $resposta = $prepare->get_result();
         return $resposta->fetch_object(Alumno::class);
+    }
+
+    public function getAsignaturas(){
+        $conexion = new Conexion();
+        $conexion->conectar();
+        $prepare = mysqli_prepare($conexion->conect, "SELECT * FROM asignatura WHERE id IN (SELECT id_asignatura FROM alumno_se_matricula_asignatura WHERE id_alumno =?)");
+        $prepare->bind_param("i", $this->id);
+        $prepare->execute();
+        $resposta = $prepare->get_result();
+       
+        $asignaturas = array();
+
+        while($asignatura = $resposta->fetch_object(Asignatura::class)) {
+            array_push($asignaturas, $asignatura);
+        }
+
+        return $asignaturas;
     }
 }
